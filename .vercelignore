@@ -1,0 +1,11 @@
+# Never upload local secrets, notes or build output. Env vars live in Vercel project settings.
+.env
+.env.*
+!.env.example
+.mcp.json
+.playwright-mcp
+.next
+.next-*
+node_modules
+*.tsbuildinfo
+Fitbit Air Dashboard Free Build Plan.md
