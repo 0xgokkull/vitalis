@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { MotionConfig, motion } from 'motion/react';
 import { ThemeSwitch } from './ThemeSwitch';
+import { Logo } from './Logo';
 
 const NOTICE: Record<string, { tone: 'info' | 'warn'; text: string }> = {
   denied: { tone: 'warn', text: 'You didn’t give access, so there’s nothing to show yet. Continue with Google whenever you’re ready.' },
@@ -106,13 +107,8 @@ export function Landing({ notice }: { notice?: string }) {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 pb-16">
         <header className="flex items-center justify-between gap-4 py-5">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-surface grid place-items-center" aria-hidden>
-              <svg viewBox="0 0 20 20" className="w-5 h-5">
-                <circle cx="10" cy="10" r="7" fill="none" stroke="var(--sleep)" strokeWidth="2.5" strokeDasharray="15 30" strokeLinecap="round" transform="rotate(-150 10 10)" />
-                <circle cx="10" cy="10" r="3" fill="var(--heart)" />
-              </svg>
-            </div>
-            <span className="font-display font-semibold text-ink">Body clock</span>
+            <Logo size={36} />
+            <span className="font-display text-xl font-bold tracking-[-0.03em] text-ink">vitalis</span>
           </div>
           <ThemeSwitch />
         </header>
@@ -134,7 +130,7 @@ export function Landing({ notice }: { notice?: string }) {
               Your sleep, heart and movement around the clock.
             </h1>
             <p className="mt-6 text-lg text-ink-2 leading-relaxed max-w-[34rem]">
-              Connect the Google account your Fitbit syncs to. Body clock draws your whole day on one dial, shows how each night went, and gives you a coach who answers from your own numbers.
+              Connect the Google account your Fitbit syncs to. Vitalis draws your whole day on one dial, shows how each night went, and gives you a coach who answers from your own numbers.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
               <ConnectButton big />
