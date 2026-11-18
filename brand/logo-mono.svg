@@ -1,0 +1,9 @@
+<!-- Vitalis mark, single colour (uses currentColor). The V and dot are cut out of the tile. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Vitalis">
+  <mask id="cut">
+    <rect width="512" height="512" fill="#fff"/>
+    <path d="M140 164L256 372L352 200" fill="none" stroke="#000" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="378" cy="150" r="34" fill="#000"/>
+  </mask>
+  <rect width="512" height="512" rx="120" fill="currentColor" mask="url(#cut)"/>
+</svg>
