@@ -10,7 +10,7 @@ const NOTICE: Record<string, { tone: 'info' | 'warn'; text: string }> = {
   expired: { tone: 'warn', text: 'Your Google connection timed out. Continue with Google to pick up where you left off.' },
   not_allowed: { tone: 'warn', text: 'This app is invite-only for now, and that Google account isn’t on the list.' },
   failed: { tone: 'warn', text: 'Something went wrong while talking to Google. Please try again.' },
-  setup: { tone: 'warn', text: 'Sign-in isn’t set up on this server yet: NEXTAUTH_SECRET needs a random value. Whoever runs the app can generate one with openssl rand -base64 32, then restart.' },
+  setup: { tone: 'warn', text: 'Sign-in is unavailable right now. Please try again in a little while.' },
   signed_out: { tone: 'info', text: 'You’re signed out.' },
   disconnected: { tone: 'info', text: 'Disconnected. The app no longer has access to your Google health data, and your saved connection is deleted.' },
 };
