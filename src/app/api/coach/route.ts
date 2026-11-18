@@ -4,6 +4,9 @@ import { CoachLimitError, sseToText, streamChat, type ChatMessage } from '@/lib/
 import { asUser } from '@/lib/healthData';
 import { getSessionEmail } from '@/lib/session';
 
+// Streamed answers can take a while on the slower fallback models.
+export const maxDuration = 60;
+
 // Everyone shares the Groq keys, so each person gets a fair share per day.
 const PER_DAY = Number(process.env.COACH_DAILY_LIMIT) || 100;
 const asked = new Map<string, number[]>();
