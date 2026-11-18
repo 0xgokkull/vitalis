@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque, Figtree } from 'next/font/google';
 import './globals.css';
+import { Ambient } from '@/components/Ambient';
 
 const bricolage = Bricolage_Grotesque({ variable: '--font-bricolage', subsets: ['latin'] });
 const figtree = Figtree({ variable: '--font-figtree', subsets: ['latin'] });
@@ -26,7 +27,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen">
+        <Ambient />
+        {children}
+      </body>
     </html>
   );
 }
