@@ -5,6 +5,7 @@ import type { DashboardData } from '../types/dashboard';
 import { ago } from '../lib/format';
 import { ThemeSwitch } from './ThemeSwitch';
 import { AccountMenu } from './AccountMenu';
+import { Logo } from './Logo';
 
 interface Props {
   data: DashboardData | null;
@@ -39,19 +40,15 @@ export function TopBar({ data, loading, onRefresh }: Props) {
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between gap-3 py-3 sm:py-4 before:absolute before:inset-y-0 before:left-1/2 before:-translate-x-1/2 before:w-screen before:-z-10 before:bg-bg/75 before:backdrop-blur-xl before:[mask-image:linear-gradient(to_bottom,black_55%,transparent)]">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="shrink-0 w-9 h-9 rounded-full bg-surface grid place-items-center" aria-hidden>
-          <svg viewBox="0 0 20 20" className="w-5 h-5">
-            <circle cx="10" cy="10" r="7" fill="none" stroke="var(--sleep)" strokeWidth="2.5" strokeDasharray="15 30" strokeLinecap="round" transform="rotate(-150 10 10)" />
-            <circle cx="10" cy="10" r="3" fill="var(--heart)" />
-          </svg>
-        </div>
+        <Logo size={36} />
         <div className="leading-tight min-w-0">
-          <p className="font-display font-semibold text-ink">{dev?.name ?? 'Fitbit'}</p>
+          <p className="font-display text-lg font-bold tracking-[-0.03em] text-ink">vitalis</p>
           <p className="text-[13px] text-muted flex items-center gap-2 whitespace-nowrap">
             {data?.errors.device === 'needs_reauth' ? (
               <a href="/api/auth/google" className="underline underline-offset-2">Reconnect to see battery</a>
             ) : dev ? (
               <>
+                <span className="hidden sm:inline">{dev.name}</span>
                 <Battery level={dev.batteryLevel} />
                 <span>
                   {dev.batteryLevel != null ? `${dev.batteryLevel}%` : dev.batteryStatus}
