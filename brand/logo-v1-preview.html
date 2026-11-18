@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vitalis logo directions</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  /* Colours: indigo #4C5BD4 (sleep), raspberry #D6336C (heart), ink #172033.
+     Dark: indigo #8E9BFF, raspberry #FF6B8E, ground #0E1424. */
+  body { margin: 0; font-family: Figtree, system-ui, sans-serif; background: #eef1f5; color: #172033; }
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 34px; margin: 0 0 6px; }
+  .concept { margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .concept h2 { grid-column: 1 / -1; font-family: 'Bricolage Grotesque', sans-serif; margin: 0; font-size: 22px; }
+  .concept p { grid-column: 1 / -1; margin: 0; color: #44506a; }
+  .card { border-radius: 24px; padding: 28px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+  .light { background: #fff; }
+  .dark { background: #0e1424; color: #e7ebf3; }
+  .sizes { display: flex; align-items: flex-end; gap: 18px; }
+  .lockup { display: flex; align-items: center; gap: 14px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 44px; letter-spacing: -0.03em; }
+  .lockup svg { width: 56px; height: 56px; }
+  /* Wordmark direction: the tittles of both i's become small dials */
+  .wm { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 72px; letter-spacing: -0.035em; }
+  .wm .i { position: relative; }
+  .wm .i::after { content: ''; position: absolute; left: 50%; top: 0.02em; width: 0.2em; height: 0.2em; transform: translateX(-50%); border-radius: 50%; box-sizing: border-box; border: 0.055em solid var(--dot); }
+  .wm .i.h::after { background: var(--heart); border: none; width: 0.17em; height: 0.17em; top: 0.035em; }
+  .light .wm { --dot: #4C5BD4; --heart: #D6336C; }
+  .dark .wm { --dot: #8E9BFF; --heart: #FF6B8E; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Vitalis: three logo directions</h1>
+  <p>Shown on light and dark, at 16, 32, 128 and 512-style sizes. Pick one and I'll build the final files.</p>
+
+  <!-- A: Symbol -->
+  <section class="concept">
+    <h2>A. Day ring</h2>
+    <p>The 24-hour dial reduced to one thick ring, opened at midnight, with a heartbeat dot in the gap: your day around the clock, and the moment you're in.</p>
+    <div class="card light">
+      <div class="sizes">
+        <svg width="16" height="16" viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#4C5BD4" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#D6336C"/></svg>
+        <svg width="32" height="32" viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#4C5BD4" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#D6336C"/></svg>
+        <svg width="128" height="128" viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#4C5BD4" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#D6336C"/></svg>
+      </div>
+      <div class="lockup"><svg viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#4C5BD4" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#D6336C"/></svg>vitalis</div>
+    </div>
+    <div class="card dark">
+      <div class="sizes">
+        <svg width="16" height="16" viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#8E9BFF" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#FF6B8E"/></svg>
+        <svg width="32" height="32" viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#8E9BFF" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#FF6B8E"/></svg>
+        <svg width="128" height="128" viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#8E9BFF" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#FF6B8E"/></svg>
+      </div>
+      <div class="lockup"><svg viewBox="0 0 512 512"><path d="M380.5 131.5A176 176 0 1 1 131.5 131.5" fill="none" stroke="#8E9BFF" stroke-width="64" stroke-linecap="round"/><circle cx="256" cy="84" r="46" fill="#FF6B8E"/></svg>vitalis</div>
+    </div>
+  </section>
+
+  <!-- B: Monogram -->
+  <section class="concept">
+    <h2>B. Signal V</h2>
+    <p>A plain V on a solid tile, its right arm ending in a heartbeat dot. The most app-icon-like option; strongest at tiny sizes.</p>
+    <div class="card light">
+      <div class="sizes">
+        <svg width="16" height="16" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#4C5BD4"/><path d="M140 164L256 372L352 200" fill="none" stroke="#fff" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#D6336C"/></svg>
+        <svg width="32" height="32" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#4C5BD4"/><path d="M140 164L256 372L352 200" fill="none" stroke="#fff" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#D6336C"/></svg>
+        <svg width="128" height="128" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#4C5BD4"/><path d="M140 164L256 372L352 200" fill="none" stroke="#fff" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#D6336C"/></svg>
+      </div>
+      <div class="lockup"><svg viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#4C5BD4"/><path d="M140 164L256 372L352 200" fill="none" stroke="#fff" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#D6336C"/></svg>vitalis</div>
+    </div>
+    <div class="card dark">
+      <div class="sizes">
+        <svg width="16" height="16" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#8E9BFF"/><path d="M140 164L256 372L352 200" fill="none" stroke="#0E1424" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#FF6B8E"/></svg>
+        <svg width="32" height="32" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#8E9BFF"/><path d="M140 164L256 372L352 200" fill="none" stroke="#0E1424" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#FF6B8E"/></svg>
+        <svg width="128" height="128" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#8E9BFF"/><path d="M140 164L256 372L352 200" fill="none" stroke="#0E1424" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#FF6B8E"/></svg>
+      </div>
+      <div class="lockup"><svg viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#8E9BFF"/><path d="M140 164L256 372L352 200" fill="none" stroke="#0E1424" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/><circle cx="378" cy="150" r="34" fill="#FF6B8E"/></svg>vitalis</div>
+    </div>
+  </section>
+
+  <!-- C: Wordmark -->
+  <section class="concept">
+    <h2>C. Two dots, two rhythms</h2>
+    <p>The name alone. The dots on the two i's become the app's two signals: a sleep ring and a heartbeat. The favicon is just the ring and dot.</p>
+    <div class="card light">
+      <div class="sizes">
+        <svg width="16" height="16" viewBox="0 0 512 512"><circle cx="190" cy="256" r="118" fill="none" stroke="#4C5BD4" stroke-width="64"/><circle cx="390" cy="256" r="84" fill="#D6336C"/></svg>
+        <svg width="32" height="32" viewBox="0 0 512 512"><circle cx="190" cy="256" r="118" fill="none" stroke="#4C5BD4" stroke-width="64"/><circle cx="390" cy="256" r="84" fill="#D6336C"/></svg>
+        <svg width="128" height="128" viewBox="0 0 512 512"><circle cx="190" cy="256" r="118" fill="none" stroke="#4C5BD4" stroke-width="64"/><circle cx="390" cy="256" r="84" fill="#D6336C"/></svg>
+      </div>
+      <div class="wm">v<span class="i">ı</span>tal<span class="i h">ı</span>s</div>
+    </div>
+    <div class="card dark">
+      <div class="sizes">
+        <svg width="16" height="16" viewBox="0 0 512 512"><circle cx="190" cy="256" r="118" fill="none" stroke="#8E9BFF" stroke-width="64"/><circle cx="390" cy="256" r="84" fill="#FF6B8E"/></svg>
+        <svg width="32" height="32" viewBox="0 0 512 512"><circle cx="190" cy="256" r="118" fill="none" stroke="#8E9BFF" stroke-width="64"/><circle cx="390" cy="256" r="84" fill="#FF6B8E"/></svg>
+        <svg width="128" height="128" viewBox="0 0 512 512"><circle cx="190" cy="256" r="118" fill="none" stroke="#8E9BFF" stroke-width="64"/><circle cx="390" cy="256" r="84" fill="#FF6B8E"/></svg>
+      </div>
+      <div class="wm">v<span class="i">ı</span>tal<span class="i h">ı</span>s</div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
