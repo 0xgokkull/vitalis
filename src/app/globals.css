@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Circadian palette: porcelain day, midnight night. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #eef1f5;
+  --surface: #ffffff;
+  --surface-2: #f4f6f9;
+  --ink: #172033;
+  --ink-2: #44506a;
+  --muted: #74809a;
+  --line: #dde3ec;
+
+  --sleep: #4c5bd4;
+  --deep: #2f3aa3;
+  --light-sleep: #a9b3f0;
+  --rem: #7d6bdc;
+  --awake: #f2a93b;
+  --heart: #d6336c;
+  --move: #2f9e6e;
+  --breath: #1f8a9e;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0e1424;
+  --surface: #161e33;
+  --surface-2: #1c2540;
+  --ink: #e7ebf3;
+  --ink-2: #b4bdd0;
+  --muted: #8692ab;
+  --line: #27314d;
+
+  --sleep: #8e9bff;
+  --deep: #6c7bff;
+  --light-sleep: #3c4688;
+  --rem: #b49cff;
+  --awake: #ffc15a;
+  --heart: #ff6b8e;
+  --move: #4cc38a;
+  --breath: #4fc3d6;
+
+  color-scheme: dark;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-sleep: var(--sleep);
+  --color-deep: var(--deep);
+  --color-light-sleep: var(--light-sleep);
+  --color-rem: var(--rem);
+  --color-awake: var(--awake);
+  --color-heart: var(--heart);
+  --color-move: var(--move);
+  --color-breath: var(--breath);
+
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--bg);
+  transition: background-color 0.4s ease;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Figures: the display face with tabular digits so values don't jitter while counting. */
+.fig {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.02em;
+}
+
+.panel {
+  background: var(--surface);
+  border-radius: 1.5rem;
+  transition: background-color 0.4s ease;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--sleep) 30%, transparent);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--sleep);
+  outline-offset: 2px;
 }
