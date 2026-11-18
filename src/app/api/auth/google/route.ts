@@ -6,7 +6,7 @@ import { sessionSecretOk } from '@/lib/session';
 export async function GET(req: Request) {
   // Without a proper session secret sign-in can't finish, so don't send people to Google first.
   if (!sessionSecretOk()) {
-    console.error('[auth] NEXTAUTH_SECRET is missing or a placeholder. Run: openssl rand -base64 32');
+    console.error('[auth] No session key: set NEXTAUTH_SECRET (openssl rand -base64 32) or the Google and Supabase secrets.');
     return NextResponse.redirect(new URL('/?auth=setup', req.url));
   }
   const state = crypto.randomUUID();
