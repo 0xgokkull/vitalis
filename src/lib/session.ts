@@ -7,13 +7,18 @@ import { connection } from 'next/server';
 export const SESSION_COOKIE = 'session';
 const MAX_AGE = 30 * 24 * 3600; // seconds
 
-function secret() {
+/** False when NEXTAUTH_SECRET is missing, short or still an example value. */
+export function sessionSecretOk(): boolean {
   const s = process.env.NEXTAUTH_SECRET;
   // A guessable secret would let anyone forge a session, so refuse short or example values.
-  if (!s || s.length < 32 || /generate|change|example|your-|secret/i.test(s)) {
+  return Boolean(s && s.length >= 32 && !/generate|change|example|your-|secret/i.test(s));
+}
+
+function secret() {
+  if (!sessionSecretOk()) {
     throw new Error('NEXTAUTH_SECRET must be a random value of 32+ characters (run: openssl rand -base64 32)');
   }
-  return s;
+  return process.env.NEXTAUTH_SECRET!;
 }
 
 const sign = (data: string) => createHmac('sha256', secret()).update(data).digest('base64url');
