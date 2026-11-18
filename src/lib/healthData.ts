@@ -40,8 +40,9 @@ export async function getAccessToken(): Promise<string> {
     accessTokens.set(email, { token: t.access_token, expiresAt: Date.now() + t.expires_in * 1000 });
     return t.access_token;
   } catch (e) {
-    // Revoked, or expired (Testing-mode apps get 7-day refresh tokens): they need to connect again.
-    if ((e as Error).message.includes('invalid_grant')) throw new Error('needs_reauth');
+    // Revoked, expired (Testing-mode apps get 7-day refresh tokens), or issued to a
+    // previous OAuth client: either way they need to connect again.
+    if (/invalid_grant|unauthorized_client|invalid_client/.test((e as Error).message)) throw new Error('needs_reauth');
     throw e;
   }
 }
