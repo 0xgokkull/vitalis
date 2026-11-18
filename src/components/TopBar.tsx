@@ -43,14 +43,14 @@ export function TopBar({ data, loading, onRefresh }: Props) {
         <Logo size={36} />
         <div className="leading-tight min-w-0">
           <p className="font-display text-lg font-bold tracking-[-0.03em] text-ink">vitalis</p>
-          <p className="text-[13px] text-muted flex items-center gap-2 whitespace-nowrap">
+          <p className="text-[13px] text-muted flex items-center gap-2 whitespace-nowrap overflow-hidden">
             {data?.errors.device === 'needs_reauth' ? (
               <a href="/api/auth/google" className="underline underline-offset-2">Reconnect to see battery</a>
             ) : dev ? (
               <>
                 <span className="hidden sm:inline">{dev.name}</span>
                 <Battery level={dev.batteryLevel} />
-                <span>
+                <span className="truncate">
                   {dev.batteryLevel != null ? `${dev.batteryLevel}%` : dev.batteryStatus}
                   {synced && (
                     <>
