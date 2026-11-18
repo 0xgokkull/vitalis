@@ -1,0 +1,6 @@
+<!-- Vitalis mark for dark backgrounds. Indigo #8E9BFF, raspberry #FF6B8E, ground #0E1424. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Vitalis">
+  <rect width="512" height="512" rx="120" fill="#8E9BFF"/>
+  <path d="M140 164L256 372L352 200" fill="none" stroke="#0E1424" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="378" cy="150" r="34" fill="#FF6B8E"/>
+</svg>
