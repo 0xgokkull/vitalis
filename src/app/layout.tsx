@@ -6,9 +6,34 @@ import { Ambient } from '@/components/Ambient';
 const bricolage = Bricolage_Grotesque({ variable: '--font-bricolage', subsets: ['latin'] });
 const figtree = Figtree({ variable: '--font-figtree', subsets: ['latin'] });
 
+const description =
+  'Vitalis turns your Fitbit band data into one 24-hour view of your sleep, heart and movement, with a coach that answers from your own numbers.';
+
+// Absolute base for share images: the configured URL, else Vercel's production domain.
+const siteUrl =
+  process.env.NEXTAUTH_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'http://localhost:3000');
+
 export const metadata: Metadata = {
-  title: 'Body clock · Fitbit Air',
-  description: 'Your sleep, heart and movement around the 24-hour clock.',
+  metadataBase: new URL(siteUrl),
+  title: { default: 'Vitalis', template: '%s · Vitalis' },
+  description,
+  applicationName: 'Vitalis',
+  keywords: ['Vitalis', 'Fitbit', 'sleep tracking', 'heart rate', 'HRV', 'health dashboard', 'Google Health'],
+  appleWebApp: { capable: true, title: 'Vitalis', statusBarStyle: 'default' },
+  openGraph: {
+    type: 'website',
+    siteName: 'Vitalis',
+    title: 'Vitalis: your sleep, heart and movement around the clock',
+    description,
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vitalis: your sleep, heart and movement around the clock',
+    description,
+  },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
