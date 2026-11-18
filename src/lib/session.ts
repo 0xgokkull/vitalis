@@ -16,7 +16,7 @@ function secret(): string | null {
   const a = process.env.GOOGLE_CLIENT_SECRET;
   const b = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!a || !b) return null;
-  return createHmac('sha256', `${a}:${b}`).update('body-clock session key v1').digest('base64url');
+  return createHmac('sha256', `${a}:${b}`).update('vitalis session key v1').digest('base64url');
 }
 
 /** False only when the server has no secret material to sign sessions with. */
