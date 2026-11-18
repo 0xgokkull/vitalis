@@ -37,7 +37,7 @@ export function TopBar({ data, loading, onRefresh }: Props) {
   const stale = dev?.lastSyncTime && now ? now - Date.parse(dev.lastSyncTime) > 6 * 3600_000 : false;
 
   return (
-    <header className="sticky top-0 z-30 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 py-3 sm:py-4 bg-bg/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 flex items-center justify-between gap-3 py-3 sm:py-4 before:absolute before:inset-y-0 before:left-1/2 before:-translate-x-1/2 before:w-screen before:-z-10 before:bg-bg/75 before:backdrop-blur-xl before:[mask-image:linear-gradient(to_bottom,black_55%,transparent)]">
       <div className="flex items-center gap-3 min-w-0">
         <div className="shrink-0 w-9 h-9 rounded-full bg-surface grid place-items-center" aria-hidden>
           <svg viewBox="0 0 20 20" className="w-5 h-5">
