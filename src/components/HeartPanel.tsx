@@ -92,7 +92,7 @@ export function HeartPanel({ date, data, zones, restingHr, sleep, exercises }: P
             ))}
           </div>
           <div className="min-w-0">
-            <div ref={ref} className="relative cursor-crosshair touch-none" style={{ height: H }} onPointerMove={onMove} onPointerLeave={() => setHover(null)}>
+            <div ref={ref} className="relative cursor-crosshair touch-pan-y" style={{ height: H }} onPointerMove={onMove} onPointerDown={onMove} onPointerLeave={(e) => e.pointerType === 'mouse' && setHover(null)}>
               <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="absolute inset-0 w-full h-full" role="img" aria-label="Heart rate through the day">
                 <defs>
                   <linearGradient id="hr-fill" x1="0" x2="0" y1="0" y2="1">
@@ -186,7 +186,7 @@ export function HeartPanel({ date, data, zones, restingHr, sleep, exercises }: P
                   {e.start}–{e.end}, {e.activeMinutes} minutes
                 </p>
               </div>
-              <p className="text-sm text-ink-2 text-right">
+              <p className="text-sm text-ink-2 sm:text-right">
                 {e.avgHr != null && <>Average {e.avgHr} bpm<br /></>}
                 {[e.azm != null && `${e.azm} zone min`, e.kcal != null && `${e.kcal} kcal`].filter(Boolean).join(', ')}
               </p>
