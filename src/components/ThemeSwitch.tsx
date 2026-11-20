@@ -78,8 +78,12 @@ export function ThemeSwitch() {
           aria-checked={choice === o.value}
           aria-label={o.label}
           title={o.label}
-          onClick={() => pick(o.value)}
-          className={`relative w-8 h-8 rounded-full grid place-items-center transition-colors ${choice === o.value ? 'text-ink' : 'text-muted hover:text-ink-2'}`}
+          onClick={() => {
+            // Phones show only the current choice; tapping it moves to the next one.
+            const narrow = !matchMedia('(min-width: 640px)').matches;
+            pick(narrow && choice === o.value ? OPTIONS[(OPTIONS.indexOf(o) + 1) % OPTIONS.length].value : o.value);
+          }}
+          className={`relative w-8 h-8 rounded-full place-items-center transition-colors ${choice === o.value ? 'grid text-ink' : 'hidden sm:grid text-muted hover:text-ink-2'}`}
         >
           {choice === o.value && (
             <motion.span layoutId="theme-pill" className="absolute inset-0 rounded-full bg-surface-2" transition={{ type: 'spring', stiffness: 500, damping: 35 }} />
