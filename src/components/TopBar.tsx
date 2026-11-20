@@ -54,7 +54,7 @@ export function TopBar({ data, loading, onRefresh }: Props) {
                   {dev.batteryLevel != null ? `${dev.batteryLevel}%` : dev.batteryStatus}
                   {synced && (
                     <>
-                      , <span className={stale ? 'text-awake' : undefined} title={stale ? 'Open the Fitbit app on your phone to sync the band' : undefined}>synced {synced}</span>
+                      , <span className={stale ? 'text-awake' : undefined} title={stale ? 'Open the Fitbit app on your phone to sync the band' : undefined}><span className="hidden sm:inline">synced </span>{synced}</span>
                     </>
                   )}
                 </span>
