@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { DashboardData } from '../types/dashboard';
 import { dur, shortDate, signed, tempDelta } from '../lib/format';
+import { EXPLAIN } from './explain';
 
 export type TrendKey = 'sleepMinutes' | 'restingHr' | 'hrv' | 'steps' | 'azm' | 'spo2' | 'respRate' | 'skinTempDevC';
 interface Metric {
@@ -82,7 +83,17 @@ export function TrendsPanel({ data, metric: key, onMetric: setKey, onDate }: Pro
             key={x.key}
             role="tab"
             aria-selected={key === x.key}
+            tabIndex={key === x.key ? 0 : -1}
             onClick={() => setKey(x.key)}
+            onKeyDown={(e) => {
+              const i = metrics.indexOf(x);
+              const j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? metrics.length - 1 : null;
+              if (j == null) return;
+              e.preventDefault();
+              const next = metrics[(j + metrics.length) % metrics.length];
+              setKey(next.key);
+              (e.currentTarget.parentElement?.children[metrics.indexOf(next)] as HTMLElement | undefined)?.focus();
+            }}
             className={`relative shrink-0 h-9 px-4 rounded-full text-sm transition-colors ${key === x.key ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
           >
             {key === x.key && <motion.span layoutId="metric-pill" className="absolute inset-0 rounded-full bg-surface-2" style={{ boxShadow: `inset 0 0 0 1.5px ${x.color}` }} transition={{ type: 'spring', stiffness: 450, damping: 35 }} />}
@@ -93,6 +104,23 @@ export function TrendsPanel({ data, metric: key, onMetric: setKey, onDate }: Pro
           </button>
         ))}
       </div>
+
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.p
+          key={key}
+          className="mt-5 flex gap-3 rounded-2xl bg-surface-2 px-4 py-3 text-[15px] leading-relaxed text-ink-2"
+          initial={reduce ? false : { opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -4 }}
+          transition={{ duration: 0.18 }}
+        >
+          <span className="mt-[0.55em] w-2 h-2 shrink-0 rounded-full" style={{ background: m.color }} aria-hidden />
+          <span>
+            <span className="font-semibold text-ink">What is this? </span>
+            {EXPLAIN[key].long}
+          </span>
+        </motion.p>
+      </AnimatePresence>
 
       <div className="mt-6 flex items-baseline gap-3 min-h-10" aria-live="polite">
         {focusRow && focusRow[key] != null ? (
