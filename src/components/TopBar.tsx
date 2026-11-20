@@ -42,7 +42,13 @@ export function TopBar({ data, loading, onRefresh }: Props) {
       <div className="flex items-center gap-3 min-w-0">
         <Logo size={36} />
         <div className="leading-tight min-w-0">
-          <p className="font-display text-lg font-bold tracking-[-0.03em] text-ink">vitalis</p>
+          {data?.account?.name ? (
+            <p className="font-display text-lg font-bold tracking-[-0.02em] text-ink truncate" title={data.account.name}>
+              Hi, {data.account.name.split(/\s+/)[0]}
+            </p>
+          ) : (
+            <p className="font-display text-lg font-bold tracking-[-0.03em] text-ink">vitalis</p>
+          )}
           <p className="text-[13px] text-muted flex items-center gap-2 whitespace-nowrap overflow-hidden">
             {data?.errors.device === 'needs_reauth' ? (
               <a href="/api/auth/google" className="underline underline-offset-2">Reconnect to see battery</a>
@@ -79,7 +85,7 @@ export function TopBar({ data, loading, onRefresh }: Props) {
           </svg>
         </button>
         <ThemeSwitch />
-        {data?.account && <AccountMenu email={data.account.email} />}
+        {data?.account && <AccountMenu email={data.account.email} name={data.account.name} />}
       </div>
     </header>
   );
