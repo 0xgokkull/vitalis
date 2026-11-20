@@ -11,7 +11,8 @@ export const HEALTH_SCOPES = [
   'https://www.googleapis.com/auth/googlehealth.sleep.readonly',
   'https://www.googleapis.com/auth/googlehealth.settings.readonly', // paired devices (battery), time zone, units
 ];
-export const SCOPES = ['openid', 'email', ...HEALTH_SCOPES];
+// 'profile' only gives the display name shown in the top bar; it's optional, unlike the health scopes.
+export const SCOPES = ['openid', 'email', 'profile', ...HEALTH_SCOPES];
 
 export function redirectUri(): string {
   const base = process.env.NEXTAUTH_URL || 'http://localhost:3000';
@@ -60,9 +61,12 @@ export const exchangeCode = (code: string) =>
 export const refreshAccessToken = (refresh_token: string) =>
   tokenRequest({ refresh_token, grant_type: 'refresh_token' });
 
-export async function getEmail(accessToken: string): Promise<string | null> {
+// Verified email plus the Google display name (absent if the profile box was unticked).
+export async function getUser(accessToken: string): Promise<{ email: string; name: string | null } | null> {
   const res = await fetch(USERINFO_URL, { headers: { Authorization: `Bearer ${accessToken}` } });
   if (!res.ok) return null;
   const json = await res.json();
-  return json.email_verified ? json.email : null;
+  if (!json.email_verified || typeof json.email !== 'string') return null;
+  const name = typeof json.name === 'string' && json.name.trim() ? json.name.trim().slice(0, 80) : null;
+  return { email: json.email, name };
 }
