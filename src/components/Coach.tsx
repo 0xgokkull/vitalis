@@ -171,13 +171,19 @@ export function CoachDrawer({ data, open, onOpenChange, ask }: Props) {
 
   useEffect(() => {
     if (!open) return;
+    const opener = document.activeElement as HTMLElement | null;
     const t = setTimeout(() => inputRef.current?.focus(), 250);
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onOpenChange(false);
     window.addEventListener('keydown', onKey);
+    // The page behind shouldn't scroll while the drawer is open.
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     scrollDown();
     return () => {
       clearTimeout(t);
       window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = overflow;
+      if (opener?.isConnected) opener.focus({ preventScroll: true });
     };
   }, [open, onOpenChange]);
 
