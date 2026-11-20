@@ -10,7 +10,7 @@ function clearCoachChats() {
 }
 
 // Who's signed in, plus sign out and disconnect.
-export function AccountMenu({ email }: { email: string }) {
+export function AccountMenu({ email, name }: { email: string; name: string | null }) {
   const [open, setOpen] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState<'out' | 'disconnect' | null>(null);
@@ -52,10 +52,10 @@ export function AccountMenu({ email }: { email: string }) {
         }}
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-label={`Account: ${email}`}
+        aria-label={`Account: ${name ?? email}`}
         className="w-10 h-10 rounded-full bg-sleep text-white font-display font-semibold grid place-items-center uppercase hover:opacity-90 transition-opacity"
       >
-        {email[0]}
+        {(name ?? email)[0]}
       </button>
       <AnimatePresence>
         {open && (
@@ -70,7 +70,8 @@ export function AccountMenu({ email }: { email: string }) {
           >
             <div className="px-3 py-2.5">
               <p className="text-xs text-muted">Signed in with Google</p>
-              <p className="text-sm text-ink truncate">{email}</p>
+              {name && <p className="text-sm font-semibold text-ink truncate">{name}</p>}
+              <p className={`text-sm truncate ${name ? 'text-ink-2' : 'text-ink'}`}>{email}</p>
             </div>
             <div className="h-px bg-line my-1" />
             {!confirming ? (
