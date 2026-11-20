@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { exchangeCode, getEmail, HEALTH_SCOPES } from '@/lib/googleHealth';
+import { exchangeCode, getUser, HEALTH_SCOPES } from '@/lib/googleHealth';
 import { getServiceSupabase } from '@/lib/supabase';
 import { getSessionEmail, SESSION_COOKIE, sessionCookieOptions, sessionValue } from '@/lib/session';
 
@@ -28,8 +28,9 @@ export async function GET(req: NextRequest) {
     const granted = new Set(tokens.scope.split(' '));
     if (HEALTH_SCOPES.some((s) => !granted.has(s))) return home('scopes');
 
-    const email = await getEmail(tokens.access_token);
-    if (!email) return home('failed');
+    const user = await getUser(tokens.access_token);
+    if (!user) return home('failed');
+    const { email, name } = user;
     const allow = (process.env.ALLOWED_EMAILS ?? '').split(',').map((e) => e.trim().toLowerCase()).filter(Boolean);
     if (allow.length && !allow.includes(email.toLowerCase())) return home('not_allowed');
     if (!tokens.refresh_token) return home('failed');
@@ -53,7 +54,7 @@ export async function GET(req: NextRequest) {
     }
 
     const res = home();
-    res.cookies.set(SESSION_COOKIE, sessionValue(email), sessionCookieOptions);
+    res.cookies.set(SESSION_COOKIE, sessionValue(email, name), sessionCookieOptions);
     return res;
   } catch (e) {
     console.error('[auth] callback failed:', (e as Error).message);
