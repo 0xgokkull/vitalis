@@ -24,6 +24,12 @@ function minutesIn(tz: string) {
   return Number(p.hour) * 60 + Number(p.minute);
 }
 
+const SOURCE_NAME: Record<string, string> = {
+  steps: 'steps', distance: 'distance', calories: 'calories', azm: 'zone minutes', restingHr: 'resting heart rate', hrv: 'HRV',
+  spo2: 'blood oxygen', respRate: 'breathing rate', skinTemp: 'skin temperature', hrZones: 'heart rate zones', sleep: 'sleep',
+  heartRate: 'heart rate', exercise: 'workouts',
+};
+
 export function Dashboard() {
   const [date, setDate] = useState<string | undefined>(undefined);
   const [data, setData] = useState<DashboardData | null>(null);
@@ -127,12 +133,12 @@ export function Dashboard() {
         )}
         {failed.length > 0 && (
           <p className="mt-2 text-sm text-heart">
-            Google didn’t return {failed.map(([k]) => k).join(', ')} this time. Refresh to try again.
+            Google didn’t return your {failed.map(([k]) => SOURCE_NAME[k] ?? k).join(', ')} this time. Refresh to try again.
           </p>
         )}
 
         {!data && !error && (
-          <div className="grid lg:grid-cols-[1fr_minmax(0,520px)] gap-10 items-center py-12" aria-busy="true">
+          <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] gap-10 items-center py-12" aria-busy="true">
             <div className="space-y-4">
               <div className="h-16 w-3/4 rounded-2xl bg-surface animate-pulse" />
               <div className="h-10 w-1/2 rounded-2xl bg-surface animate-pulse" />
@@ -143,7 +149,7 @@ export function Dashboard() {
 
         {data && (
           <motion.main animate={{ opacity: loading ? 0.55 : 1 }} transition={{ duration: 0.25 }} className="space-y-6">
-            <section className="grid lg:grid-cols-[1fr_minmax(0,520px)] lg:grid-rows-[auto_1fr] gap-x-12 gap-y-10 py-8 lg:py-12">
+            <section className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:grid-rows-[auto_1fr] gap-x-12 gap-y-10 py-8 lg:py-12">
               <div className="lg:col-start-1 lg:row-start-1 self-end">
                 <Hero data={data} onDate={setDate} onMetric={showMetric} part="date" />
               </div>
@@ -177,9 +183,18 @@ export function Dashboard() {
               exercises={data.day.exercises}
             />
 
-            <TrendsPanel data={data} metric={metric} onMetric={setMetric} onDate={setDate} />
+            <TrendsPanel
+              data={data}
+              metric={metric}
+              onMetric={setMetric}
+              onDate={(d) => {
+                setDate(d);
+                // Opening a day from the chart: go up to that day's view.
+                window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+              }}
+            />
 
-            <div className="grid lg:grid-cols-2 gap-6 items-start">
+            <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-2 gap-6 items-start">
               <ActivityPanel data={data} />
               <CoachCard data={data} onAsk={openCoach} />
             </div>
@@ -193,7 +208,7 @@ export function Dashboard() {
           </>
         )}
 
-        <footer className="mt-10 pb-16 sm:pb-0 text-[13px] text-muted flex flex-wrap justify-between gap-2">
+        <footer className="mt-10 pb-20 text-[13px] text-muted flex flex-wrap justify-between gap-2">
           <span>
             Everything here was recorded by your {data?.device?.name ?? 'Fitbit band'}
             {data?.bandSince && ` since ${new Date(`${data.bandSince}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', timeZone: 'UTC' })}`}, read through Google Health
