@@ -8,17 +8,22 @@ import { dur } from '../lib/format';
 // One chip per day the band has been worn. The little ring fills with that night's sleep (full = 9 h).
 export function DayStrip({ data, onDate }: { data: DashboardData; onDate: (d: string) => void }) {
   const listRef = useRef<HTMLDivElement>(null);
+  const placed = useRef(false);
 
   useEffect(() => {
-    const el = listRef.current?.querySelector<HTMLElement>('[aria-current="date"]');
-    el?.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+    // Centre the chosen day inside the strip only; scrollIntoView would also move the page.
+    const list = listRef.current;
+    const el = list?.querySelector<HTMLElement>('[aria-current="date"]');
+    if (!list || !el) return;
+    list.scrollTo({ left: el.offsetLeft - (list.clientWidth - el.offsetWidth) / 2, behavior: placed.current ? 'smooth' : 'instant' });
+    placed.current = true;
   }, [data.date]);
 
   const R = 11;
   const CIRC = 2 * Math.PI * R;
 
   return (
-    <div ref={listRef} className="flex gap-1.5 overflow-x-auto pb-1 -mx-1 px-1 [scrollbar-width:none]" role="group" aria-label="Choose a day">
+    <div ref={listRef} className="relative flex gap-1.5 overflow-x-auto pb-1 -mx-1 px-1 [scrollbar-width:none]" role="group" aria-label="Choose a day">
       {data.trends.map((r) => {
         const active = r.date === data.date;
         const d = new Date(`${r.date}T00:00:00Z`);
