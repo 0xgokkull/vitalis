@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import type { SleepStageInterval, SleepSummary } from '../types/dashboard';
 import { dur, toMin } from '../lib/format';
 import { STAGE_COLOR, STAGE_NAME } from './BodyClock';
+import { STAGE_HINT } from './explain';
 
 const ORDER: SleepStageInterval['stage'][] = ['wake', 'rem', 'light', 'deep'];
 const W = 1000;
@@ -104,8 +105,9 @@ export function SleepPanel({ sleep, avgNights, title }: { sleep: SleepSummary; a
             </svg>
           </div>
           <div className="relative h-6 mt-2 text-xs text-muted fig" aria-hidden>
-            {ticks.map((t) => (
-              <span key={t.x} className="absolute -translate-x-1/2" style={{ left: `${t.x}%` }}>
+            {ticks.map((t, i) => (
+              // Phones: every other hour, so the labels don't run into each other.
+              <span key={t.x} className={`absolute -translate-x-1/2 ${i % 2 ? 'hidden sm:inline' : ''}`} style={{ left: `${t.x}%` }}>
                 {t.label}
               </span>
             ))}
@@ -136,6 +138,7 @@ export function SleepPanel({ sleep, avgNights, title }: { sleep: SleepSummary; a
               <span className="fig text-2xl font-semibold">{dur(t.min)}</span>
               <span className="text-sm text-muted">{Math.round((t.min / all) * 100)}%</span>
             </dd>
+            <dd className="mt-1 text-[13px] leading-snug text-muted">{STAGE_HINT[t.stage]}</dd>
           </div>
         ))}
       </dl>
