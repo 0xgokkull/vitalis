@@ -118,9 +118,10 @@ export function BodyClock({ data, nowMin }: Props) {
       <svg
         ref={svgRef}
         viewBox={`0 0 ${S} ${S}`}
-        className="w-full h-auto touch-none select-none"
+        className="w-full h-auto touch-pan-y select-none"
         onPointerMove={onMove}
-        onPointerLeave={() => setHoverMin(null)}
+        onPointerDown={onMove}
+        onPointerLeave={(e) => e.pointerType === 'mouse' && setHoverMin(null)} // a tap's readout stays until the next tap
         role="img"
         aria-label={`24-hour view of ${data.date}: sleep stages around the night, heart rate inside, workouts on the inner ring`}
       >
