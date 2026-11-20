@@ -174,10 +174,8 @@ async function fetchSettings() {
   const s = await call('users/me/settings');
   return {
     timeZone: (s.timeZone as string) || 'UTC',
-    units: {
-      distance: s.distanceUnit === 'DISTANCE_UNIT_MILES' ? 'mi' : 'km',
-      temperature: s.temperatureUnit === 'TEMPERATURE_UNIT_FAHRENHEIT' ? 'F' : 'C',
-    } as DashboardData['units'],
+    // Indian standard units for everyone (km, °C), whatever the Fitbit account is set to.
+    units: { distance: 'km', temperature: 'C' } as DashboardData['units'],
   };
 }
 
