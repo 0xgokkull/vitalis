@@ -7,6 +7,7 @@ import { ago, relativeDay, shiftDate, shortDate, signed, tempDelta } from '../li
 import { CountUp } from './CountUp';
 import { DayStrip } from './DayStrip';
 import type { TrendKey } from './TrendsPanel';
+import { EXPLAIN } from './explain';
 
 interface Props {
   data: DashboardData;
@@ -91,7 +92,7 @@ export function Hero({ data, onDate, onMetric, part }: Props) {
 
   const vitals: Vital[] = [
     { key: 'restingHr', name: 'Resting heart rate', value: d.restingHr, format: int, unit: 'bpm', color: 'var(--heart)', ...compare(d.restingHr, a.restingHr, false) },
-    { key: 'hrv', name: 'Heart rate variability', value: d.hrv, format: int, unit: 'ms', color: 'var(--rem)', ...compare(d.hrv, a.hrv, true) },
+    { key: 'hrv', name: 'Heart rate variability (HRV)', value: d.hrv, format: int, unit: 'ms', color: 'var(--rem)', ...compare(d.hrv, a.hrv, true) },
     { key: 'spo2', name: 'Blood oxygen', value: d.spo2?.avg ?? null, format: one, unit: '%', color: 'var(--breath)', note: d.spo2 ? `Overnight range ${d.spo2.min}–${d.spo2.max}%` : undefined, good: null },
     { key: 'respRate', name: 'Breathing rate', value: d.respRate, format: one, unit: 'breaths/min', color: 'var(--breath)', note: d.respRate != null ? 'Average while asleep' : undefined, good: null },
     {
@@ -146,7 +147,7 @@ export function Hero({ data, onDate, onMetric, part }: Props) {
             <span className="absolute left-3 top-4 bottom-4 w-[3px] rounded-full transition-all group-hover:top-3 group-hover:bottom-3" style={{ background: v.color }} />
             <span className="text-sm text-ink-2 flex items-center justify-between gap-2">
               {v.name}
-              <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0 transition-all" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+              <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 opacity-30 group-hover:opacity-70 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
                 <path d="m6 3 5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </span>
@@ -163,6 +164,7 @@ export function Hero({ data, onDate, onMetric, part }: Props) {
               )}
               <Spark rows={data.trends} k={v.key} date={data.date} color={v.color} />
             </span>
+            <span className="block mt-1.5 text-[13px] leading-snug text-ink-2">{EXPLAIN[v.key].short}</span>
             {v.note && <span className={`block mt-1 text-[13px] ${v.good === true ? 'text-move' : v.good === false ? 'text-heart' : 'text-muted'}`}>{v.note}</span>}
           </button>
         </li>
