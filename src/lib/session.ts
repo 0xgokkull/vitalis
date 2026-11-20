@@ -1,5 +1,5 @@
 // Server-only: a signed session cookie that says which Google account is signed in.
-// Format: base64url(JSON {e: email, x: expiry ms}) + "." + HMAC-SHA256 signature.
+// Format: base64url(JSON {e: email, n: display name, x: expiry ms}) + "." + HMAC-SHA256 signature.
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { cookies } from 'next/headers';
 import { connection } from 'next/server';
@@ -32,12 +32,12 @@ function key(): string {
 
 const sign = (data: string) => createHmac('sha256', key()).update(data).digest('base64url');
 
-export function sessionValue(email: string): string {
-  const data = Buffer.from(JSON.stringify({ e: email, x: Date.now() + MAX_AGE * 1000 })).toString('base64url');
+export function sessionValue(email: string, name: string | null = null): string {
+  const data = Buffer.from(JSON.stringify({ e: email, n: name, x: Date.now() + MAX_AGE * 1000 })).toString('base64url');
   return `${data}.${sign(data)}`;
 }
 
-export function readSession(value: string | undefined): string | null {
+export function readSession(value: string | undefined): { email: string; name: string | null } | null {
   if (!value) return null;
   const [data, sig] = value.split('.');
   if (!data || !sig) return null;
@@ -45,17 +45,23 @@ export function readSession(value: string | undefined): string | null {
   const given = Buffer.from(sig);
   if (expected.length !== given.length || !timingSafeEqual(expected, given)) return null;
   try {
-    const { e, x } = JSON.parse(Buffer.from(data, 'base64url').toString());
-    return typeof e === 'string' && typeof x === 'number' && x > Date.now() ? e : null;
+    const { e, n, x } = JSON.parse(Buffer.from(data, 'base64url').toString());
+    if (typeof e !== 'string' || typeof x !== 'number' || x <= Date.now()) return null;
+    return { email: e, name: typeof n === 'string' ? n : null }; // sessions from before names have no n
   } catch {
     return null;
   }
 }
 
-/** Email of the signed-in user, or null. */
-export async function getSessionEmail(): Promise<string | null> {
+/** The signed-in user (email and Google display name), or null. */
+export async function getSessionUser(): Promise<{ email: string; name: string | null } | null> {
   await connection(); // per request, never prerendered
   return readSession((await cookies()).get(SESSION_COOKIE)?.value);
+}
+
+/** Email of the signed-in user, or null. */
+export async function getSessionEmail(): Promise<string | null> {
+  return (await getSessionUser())?.email ?? null;
 }
 
 export const sessionCookieOptions = {
