@@ -94,7 +94,7 @@ export interface DashboardData {
   timeZone: string;
   units: { distance: 'mi' | 'km'; temperature: 'C' | 'F' };
   device: { name: string; batteryLevel?: number; batteryStatus?: string; lastSyncTime?: string } | null;
-  account?: { email: string }; // added by the API route for the signed-in user
+  account?: { email: string; name: string | null }; // added by the API route for the signed-in user
   day: DayData;
   trends: TrendPoint[]; // oldest -> newest, from bandSince up to today (max 30 days)
   averages: Averages;
